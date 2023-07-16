@@ -25,14 +25,11 @@ class UINavigationBar extends UIView {
     shadow.innerHTML = 
 `<style>
   #background {
-    /* --padding-top: 54px; */
-    /* padding-top: var(--padding-top); */
     padding-top: env(safe-area-inset-top);
     position: fixed;
     top: 0;
     right: 0;
     left: 0;
-    /* min-height: calc(98px - var(--padding-top)); */
     min-height: 44px;
     background: rgba(249,249,249,0.94);
     box-shadow: 0 0.33px 0 0 rgba(0,0,0,0.30);

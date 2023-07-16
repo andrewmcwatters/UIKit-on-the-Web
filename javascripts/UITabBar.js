@@ -21,14 +21,11 @@ class UITabBar extends UIView {
     shadow.innerHTML = 
 `<style>
   #background {
-    /* --padding-bottom: 34px; */
-    /* padding-bottom: var(--padding-bottom); */
     padding-bottom: env(safe-area-inset-bottom);
     position: fixed;
     right: 0;
     bottom: 0;
     left: 0;
-    /* min-height: calc(83px - var(--padding-bottom)); */
     min-height: 44px;
     background: rgba(247,247,247,0.80);
     box-shadow: 0 -0.5px 0 0 rgba(0,0,0,0.30);
