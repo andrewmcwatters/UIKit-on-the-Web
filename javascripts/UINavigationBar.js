@@ -38,6 +38,13 @@ class UINavigationBar extends UIView {
     box-shadow: 0 0 0 0 rgba(0,0,0,0.30);
   }
 
+  @media (prefers-color-scheme: dark) {
+    #background {
+      background: rgba(29,29,29,0.94);
+      box-shadow: 0 0 0 0 rgba(255,255,255,0.15);
+    }
+  }
+
   #background > div {
     display: flex;
     justify-content: space-between;
@@ -69,6 +76,12 @@ class UINavigationBar extends UIView {
     line-height: 22px;
   }
 
+  @media (prefers-color-scheme: dark) {
+    #title {
+      color: #FFFFFF;
+    }
+  }
+
   #title-large {
     /* font-family: SFPro-Bold; */
     font-weight: 700;
@@ -79,6 +92,12 @@ class UINavigationBar extends UIView {
     margin-left: 16px;
     padding-top: 4px;
     padding-bottom: 7px;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    #title-large {
+      color: #FFFFFF;
+    }
   }
 </style>
 <div id="background">
