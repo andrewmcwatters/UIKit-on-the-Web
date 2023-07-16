@@ -2,6 +2,8 @@
 // https://developer.apple.com/documentation/uikit/uitabbaritem
 // Create a class for the element
 class UITabBarItem extends UIView {
+  static get observedAttributes() { return ['label']; }
+
   constructor() {
     // Always call super first in constructor
     super();
@@ -17,6 +19,7 @@ class UITabBarItem extends UIView {
 
   draw() {
     const shadow = this.shadowRoot;
+    const label  = this.getAttribute('label');
 
     shadow.innerHTML = 
 `<style>
@@ -60,7 +63,7 @@ class UITabBarItem extends UIView {
     ★
   </div>
   <div id="label">
-    Tab
+    ${label}
   </div>
 </div>`;
   }
