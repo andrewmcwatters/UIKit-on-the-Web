@@ -21,7 +21,7 @@ class UITabBarItem extends UIView {
     shadow.innerHTML = 
 `<style>
   #root {
-    min-height: 48px;
+    min-width: 48px;
     min-height: 49px;
   }
 
