@@ -31,13 +31,15 @@ class UITabBar extends UIView {
     /* min-height: calc(83px - var(--padding-bottom)); */
     min-height: 44px;
     background: rgba(247,247,247,0.80);
-    box-shadow: 0 0 0 0 rgba(0,0,0,0.30);
+    box-shadow: 0 -0.5px 0 0 rgba(0,0,0,0.30);
+    backdrop-filter: blur(20px) saturate(100%);
   }
 
   @media (prefers-color-scheme: dark) {
     #background {
       background: rgba(22,22,22,0.80);
-      box-shadow: 0 0 0 0 rgba(255,255,255,0.16);
+      box-shadow: 0 -0.5px 0 0 rgba(255,255,255,0.16);
+      backdrop-filter: blur(20px) saturate(30%);
     }
   }
 
