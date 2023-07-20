@@ -16,6 +16,7 @@ class UITabBar extends UIView {
     min-height: 44px;
     background: rgba(247,247,247,0.80);
     box-shadow: 0 -0.5px 0 0 rgba(0,0,0,0.30);
+    -webkit-backdrop-filter: blur(20px) saturate(100%);
     backdrop-filter: blur(20px) saturate(100%);
   }
 
@@ -23,6 +24,7 @@ class UITabBar extends UIView {
     #background {
       background: rgba(22,22,22,0.80);
       box-shadow: 0 -0.5px 0 0 rgba(255,255,255,0.16);
+      -webkit-backdrop-filter: blur(20px) saturate(30%);
       backdrop-filter: blur(20px) saturate(30%);
     }
   }

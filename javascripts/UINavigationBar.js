@@ -20,6 +20,7 @@ class UINavigationBar extends UIView {
     min-height: 44px;
     background: rgba(249,249,249,0.94);
     box-shadow: 0 0.33px 0 0 rgba(0,0,0,0.30);
+    -webkit-backdrop-filter: blur(20px) saturate(100%);
     backdrop-filter: blur(20px) saturate(100%);
   }
 
@@ -27,6 +28,7 @@ class UINavigationBar extends UIView {
     #background {
       background: rgba(29,29,29,0.94);
       box-shadow: 0 0.33px 0 0 rgba(255,255,255,0.15);
+      -webkit-backdrop-filter: blur(20px) saturate(30%);
       backdrop-filter: blur(20px) saturate(30%);
     }
   }
