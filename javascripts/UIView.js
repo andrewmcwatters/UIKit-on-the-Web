@@ -17,5 +17,12 @@ class UIView extends HTMLElement {
     this.draw();
   }
 
-  draw() {}
+  draw() {
+    const shadow = this.shadowRoot;
+
+    shadow.innerHTML = `<slot></slot>`;
+  }
 }
+
+// Define the new element
+customElements.define('x-uiview', UIView);
