@@ -2,19 +2,6 @@
 // https://developer.apple.com/documentation/uikit/uitabbar
 // Create a class for the element
 class UITabBar extends UIView {
-  constructor() {
-    // Always call super first in constructor
-    super();
-
-    // Create a shadow root
-    /* const shadow = */ this.attachShadow({mode: 'open'});
-    this.draw();
-  }
-
-  attributeChangedCallback(name, oldValue, newValue) {
-    this.draw();
-  }
-
   draw() {
     const shadow = this.shadowRoot;
 

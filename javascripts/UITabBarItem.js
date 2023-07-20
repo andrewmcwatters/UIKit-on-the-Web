@@ -4,19 +4,6 @@
 class UITabBarItem extends UIView {
   static get observedAttributes() { return ['label']; }
 
-  constructor() {
-    // Always call super first in constructor
-    super();
-
-    // Create a shadow root
-    /* const shadow = */ this.attachShadow({mode: 'open'});
-    this.draw();
-  }
-
-  attributeChangedCallback(name, oldValue, newValue) {
-    this.draw();
-  }
-
   draw() {
     const shadow = this.shadowRoot;
     const label  = this.getAttribute('label');

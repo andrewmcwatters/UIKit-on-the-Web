@@ -4,19 +4,6 @@
 class UINavigationBar extends UIView {
   static get observedAttributes() { return ['title', 'preferslargetitle']; }
 
-  constructor() {
-    // Always call super first in constructor
-    super();
-
-    // Create a shadow root
-    /* const shadow = */ this.attachShadow({mode: 'open'});
-    this.draw();
-  }
-
-  attributeChangedCallback(name, oldValue, newValue) {
-    this.draw();
-  }
-
   draw() {
     const shadow            = this.shadowRoot;
     const title             = this.getAttribute('title');
