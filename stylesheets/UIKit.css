@@ -11,10 +11,10 @@ x-uiview > #title-large {
   font-size: 34px;
   color: #000000;
   line-height: 41px;
-  margin-top: 44px;
   margin-right: 16px;
   margin-left: 16px;
-  padding-top: 4px;
+  /* padding-top: 4px; */
+  padding-top: calc(44px + 4px);
   padding-bottom: 7px;
 }
 
