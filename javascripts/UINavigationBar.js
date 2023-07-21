@@ -34,10 +34,13 @@ class UINavigationBar extends UIView {
       lineHeight             = parseFloat(lineHeight);
       const descenderHeight  = 7;
       const baseline         = paddingTop + lineHeight - descenderHeight;
+      const title            = this.shadowRoot.querySelector('#title');
       if (window.scrollY >= baseline) {
-        this.shadowRoot.querySelector('#title').style.opacity = 1;
+        titleLarge.style.opacity = 0;
+             title.style.opacity = 1;
       } else {
-        this.shadowRoot.querySelector('#title').style.opacity = 0;
+        titleLarge.style.opacity = 1;
+             title.style.opacity = 0;
       }
     }, passiveIfSupported);
   }
@@ -55,6 +58,7 @@ class UINavigationBar extends UIView {
     top: 0;
     right: 0;
     left: 0;
+    z-index: 1;
     min-height: 44px;
     background: rgba(249,249,249,0.94);
     box-shadow: 0 0.33px 0 0 rgba(0,0,0,0.30);
@@ -100,6 +104,7 @@ class UINavigationBar extends UIView {
     color: #000000;
     text-align: center;
     line-height: 22px;
+    transition: opacity 0.2s linear;
   }
 
   @media (prefers-color-scheme: dark) {
@@ -129,7 +134,7 @@ class UINavigationBar extends UIView {
 <div id="background">
   <div>
     <div id="controls-left"></div>
-    <div id="title">${title}</div>
+    <div id="title"${prefersLargeTitle ? ' style="opacity: 0;"' : ''}>${title}</div>
     <div id="controls-right"></div>
   </div>
   <!-- ${prefersLargeTitle ? `<div id="title-large">${title}</div>` : ''} -->

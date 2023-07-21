@@ -16,6 +16,7 @@ x-uiview > #title-large {
   /* padding-top: 4px; */
   padding-top: calc(44px + 4px);
   padding-bottom: 7px;
+  transition: opacity 0.2s linear;
 }
 
 @media (prefers-color-scheme: dark) {
