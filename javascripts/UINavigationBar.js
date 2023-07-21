@@ -4,6 +4,43 @@
 class UINavigationBar extends UIView {
   static get observedAttributes() { return ['title', 'preferslargetitle']; }
 
+  constructor() {
+    // Always call super first in constructor
+    super();
+
+    // https://developer.mozilla.org/en-US/docs/Web/API/EventTarget/addEventListener#improving_scrolling_performance_with_passive_listeners
+    /* Feature detection */
+    let passiveIfSupported = false;
+
+    try {
+      window.addEventListener(
+        "test",
+        null,
+        Object.defineProperty({}, "passive", {
+          get() {
+            passiveIfSupported = { passive: true };
+          },
+        }),
+      );
+    } catch (err) {}
+
+    document.addEventListener('scroll', (event) => {
+      const { target }       = event;
+      const titleLarge       = target.querySelector('x-uiview > #title-large');
+      const { offsetHeight } = titleLarge;
+      let { paddingTop }     = getComputedStyle(titleLarge);
+      paddingTop             = parseFloat(paddingTop) - (44 + 1);
+      let { lineHeight }     = getComputedStyle(titleLarge);
+      lineHeight             = parseFloat(lineHeight);
+      let top                = paddingTop + lineHeight;
+      if (window.scrollY >= top) {
+        this.shadowRoot.querySelector('#title').style.opacity = 1;
+      } else {
+        this.shadowRoot.querySelector('#title').style.opacity = 0;
+      }
+    }, passiveIfSupported);
+  }
+  
   draw() {
     const shadow            = this.shadowRoot;
     const title             = this.getAttribute('title');
@@ -91,7 +128,7 @@ class UINavigationBar extends UIView {
 <div id="background">
   <div>
     <div id="controls-left"></div>
-    <div id="title">${prefersLargeTitle ? '' : title}</div>
+    <div id="title">${title}</div>
     <div id="controls-right"></div>
   </div>
   <!-- ${prefersLargeTitle ? `<div id="title-large">${title}</div>` : ''} -->
