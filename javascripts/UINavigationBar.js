@@ -25,20 +25,39 @@ class UINavigationBar extends UIView {
     } catch (err) {}
 
     document.addEventListener('scroll', (event) => {
-      const { target }       = event;
-      const titleLarge       = target.querySelector('x-uiview > #title-large');
-      if (titleLarge === undefined) {
+      // https://developer.apple.com/documentation/uikit/uinavigationbar/2908999-preferslargetitles
+      // Do nothing if the title does not displays in a large format
+      const prefersLargeTitle = this.getAttribute('preferslargetitle');
+      if (!prefersLargeTitle) {
         return;
       }
 
-      const { offsetHeight } = titleLarge;
-      let { paddingTop }     = getComputedStyle(titleLarge);
-      paddingTop             = parseFloat(paddingTop) - (44 + 1);
-      let { lineHeight }     = getComputedStyle(titleLarge);
-      lineHeight             = parseFloat(lineHeight);
-      const descenderHeight  = 7;
-      const baseline         = paddingTop + lineHeight - descenderHeight;
-      const title            = this.shadowRoot.querySelector('#title');
+      // Fade out large title and fade in title if we scroll past the large
+      // title's baseline
+      const { target }      = event;
+      const titleLarge      = target.querySelector('x-uiview > #title-large');
+      const background      = this.shadowRoot.querySelector('#background');
+      const title           = this.shadowRoot.querySelector('#title');
+
+      // #background offsetHeight
+      let { offsetHeight }  = background;
+
+      // #title-large padding-top
+      const titleLargeStyle = getComputedStyle(titleLarge);
+      let paddingTop        = parseFloat(titleLargeStyle.paddingTop);
+
+      // #background box-shadow offset-y
+      const offsetY         = parseFloat('1px');
+
+      // #title-large padding-top distance from the bottom of #background,
+      // including box-shadow offset-y
+      paddingTop            = paddingTop - (offsetHeight + offsetY);
+
+      // #title-large typographic metrics from system-ui
+      const lineHeight      = parseFloat(titleLargeStyle.lineHeight);
+      const descenderHeight = parseFloat('7px');
+
+      const baseline        = paddingTop + lineHeight - descenderHeight;
       if (window.scrollY >= baseline) {
         titleLarge.style.opacity = 0;
              title.style.opacity = 1;
@@ -46,13 +65,63 @@ class UINavigationBar extends UIView {
         titleLarge.style.opacity = 1;
              title.style.opacity = 0;
       }
+
+      // Fade in background and box-shadow if we scroll past the large title's
+      // offsetHeight
+      //
+      // Note: Unlike #title and #title-large, these properties fade in as you
+      // scroll versus using a CSS transition. These properties become visible
+      // 1px past the offsetHeight, and complete transition 9px past the
+      // offsetHeight. This behavior has been verified in Mail, Podcasts, and
+      // the App Store.
+      const paddingBottom = parseFloat(titleLargeStyle.paddingBottom);
+      const marginBottom  = parseFloat(titleLargeStyle.marginBottom);
+      offsetHeight        = baseline + paddingBottom + marginBottom;
+      // TODO: Calculate transition.
+      if (window.scrollY >= offsetHeight) {
+        background.style.background = '';
+        background.style.boxShadow  = '';
+      } else {
+        background.style.background = this.calculateBackgroundColor();
+        background.style.boxShadow  = 'none';
+      }
     }, passiveIfSupported);
   }
-  
-  draw() {
-    const shadow            = this.shadowRoot;
-    const title             = this.getAttribute('title');
+
+  calculateBackgroundColor() {
+    const body          = this.ownerDocument.body;
+    let backgroundColor = getComputedStyle(body).backgroundColor;
+    backgroundColor     = backgroundColor.replace('rgb', 'rgba');
+    backgroundColor     = backgroundColor.replace(')', ',0.94)');
+    return backgroundColor;
+  }
+
+  connectedCallback() {
+    this.draw();
+    this.initializeStyles();
+  }
+
+  initializeStyles() {
     const prefersLargeTitle = this.getAttribute('preferslargetitle');
+    if (!prefersLargeTitle) {
+      return;
+    }
+
+    // https://developer.apple.com/documentation/uikit/uinavigationbar/2908999-preferslargetitles
+    // Hide title if the title displays in a large format
+    const title = this.shadowRoot.querySelector('#title');
+    title.style.opacity = 0;
+
+    // Set #background rgb background to body rgb background and remove
+    // box-shadow
+    const background            = this.shadowRoot.querySelector('#background');
+    background.style.background = this.calculateBackgroundColor();
+    background.style.boxShadow  = 'none';
+  }
+
+  draw() {
+    const shadow = this.shadowRoot;
+    const title  = this.getAttribute('title');
 
     shadow.innerHTML = 
 `<style>
@@ -138,7 +207,7 @@ class UINavigationBar extends UIView {
 <div id="background">
   <div>
     <div id="controls-left"></div>
-    <div id="title"${prefersLargeTitle ? ' style="opacity: 0;"' : ''}>${title}</div>
+    <div id="title">${title}</div>
     <div id="controls-right"></div>
   </div>
 </div>`;
