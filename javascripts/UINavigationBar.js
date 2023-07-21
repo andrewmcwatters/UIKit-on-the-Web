@@ -141,7 +141,6 @@ class UINavigationBar extends UIView {
     <div id="title"${prefersLargeTitle ? ' style="opacity: 0;"' : ''}>${title}</div>
     <div id="controls-right"></div>
   </div>
-  <!-- ${prefersLargeTitle ? `<div id="title-large">${title}</div>` : ''} -->
 </div>`;
   }
 }
