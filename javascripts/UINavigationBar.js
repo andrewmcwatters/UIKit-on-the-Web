@@ -1,5 +1,7 @@
 // https://developer.mozilla.org/en-US/docs/Web/API/Web_components/Using_custom_elements
 // https://developer.apple.com/documentation/uikit/uinavigationbar
+const clamp = (n, min, max) => Math.max(min, Math.min(n, max));
+
 // Create a class for the element
 class UINavigationBar extends UIView {
   static get observedAttributes() { return ['title', 'preferslargetitle']; }
@@ -69,18 +71,30 @@ class UINavigationBar extends UIView {
       // Fade in background and box-shadow if we scroll past the large title's
       // offsetHeight
       //
-      // Note: Unlike #title and #title-large, these properties fade in as you
+      // NOTE: Unlike #title and #title-large, these properties fade in as you
       // scroll versus using a CSS transition. These properties become visible
       // 1px past the offsetHeight, and complete transition 9px past the
       // offsetHeight. This behavior has been verified in Mail, Podcasts, and
       // the App Store.
       const paddingBottom = parseFloat(titleLargeStyle.paddingBottom);
       const marginBottom  = parseFloat(titleLargeStyle.marginBottom);
-      offsetHeight        = baseline + paddingBottom + marginBottom;
-      // TODO: Calculate transition.
-      if (window.scrollY >= offsetHeight) {
+      // FIXME: We're off by two pixels. This is possibly a line-height
+      // anti-aliasing bounding box difference.
+      offsetHeight = baseline + descenderHeight + paddingBottom + marginBottom;
+      offsetHeight = offsetHeight + 2;
+      if (window.scrollY > offsetHeight) {
         background.style.background = '';
         background.style.boxShadow  = '';
+
+        let percent         = clamp((window.scrollY - offsetHeight) / 9, 0, 1);
+
+        let backgroundColor = getComputedStyle(background).backgroundColor;
+        backgroundColor     = backgroundColor.replace('0.94', `calc(0.94 * ${percent})`);
+        background.style.background = backgroundColor;
+
+        let boxShadow       = getComputedStyle(background).boxShadow;
+        boxShadow           = boxShadow.replace('0.3', `calc(0.3 * ${percent})`);
+        background.style.boxShadow  = boxShadow;
       } else {
         background.style.background = this.calculateBackgroundColor();
         background.style.boxShadow  = 'none';
