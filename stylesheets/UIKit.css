@@ -6,7 +6,7 @@
 }
 
 #window {
-  min-height: -webkit-fill-available;
+  min-height: 100vh;
 }
 
 x-uiview > #title-large {
