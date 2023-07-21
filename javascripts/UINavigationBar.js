@@ -32,8 +32,9 @@ class UINavigationBar extends UIView {
       paddingTop             = parseFloat(paddingTop) - (44 + 1);
       let { lineHeight }     = getComputedStyle(titleLarge);
       lineHeight             = parseFloat(lineHeight);
-      let top                = paddingTop + lineHeight;
-      if (window.scrollY >= top) {
+      const descenderHeight  = 7;
+      const baseline         = paddingTop + lineHeight - descenderHeight;
+      if (window.scrollY >= baseline) {
         this.shadowRoot.querySelector('#title').style.opacity = 1;
       } else {
         this.shadowRoot.querySelector('#title').style.opacity = 0;
