@@ -1,19 +1,21 @@
 // https://developer.mozilla.org/en-US/docs/Web/API/Web_components/Using_custom_elements
 // https://developer.apple.com/documentation/uikit/uitabbaritem
 // Create a class for the element
-class UITabBarItem extends UIView {
-  static get observedAttributes() { return ['label']; }
+class UITabBarItem extends UIBarItem {
+  static get observedAttributes() { return ['title']; }
 
   draw() {
     const shadow = this.shadowRoot;
-    const label  = this.getAttribute('label');
+    const title  = this.getAttribute('title');
 
     shadow.innerHTML = 
 `<style>
-  #root {
+  :host {
     min-width: 48px;
     min-height: 49px;
-  }
+    user-select: none;
+    -webkit-user-select: none;
+    }
 
   #symbol {
     margin-top: 7px;
@@ -30,7 +32,7 @@ class UITabBarItem extends UIView {
     }
   }
 
-  #label {
+  #title {
     margin-bottom: 2px;
     /* font-family: SFPro-Medium; */
     font-weight: 500;
@@ -40,18 +42,16 @@ class UITabBarItem extends UIView {
   }
 
   @media (prefers-color-scheme: dark) {
-    #label {
+    #title {
       color: #FFFFFF;
     }
   }
 </style>
-<div id="root">
-  <div id="symbol">
-    ★
-  </div>
-  <div id="label">
-    ${label}
-  </div>
+<div id="symbol">
+  <slot></slot>
+</div>
+<div id="title">
+  ${title}
 </div>`;
   }
 }
