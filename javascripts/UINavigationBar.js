@@ -27,6 +27,10 @@ class UINavigationBar extends UIView {
     document.addEventListener('scroll', (event) => {
       const { target }       = event;
       const titleLarge       = target.querySelector('x-uiview > #title-large');
+      if (titleLarge === undefined) {
+        return;
+      }
+
       const { offsetHeight } = titleLarge;
       let { paddingTop }     = getComputedStyle(titleLarge);
       paddingTop             = parseFloat(paddingTop) - (44 + 1);
