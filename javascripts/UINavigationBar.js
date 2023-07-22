@@ -83,7 +83,8 @@ class UINavigationBar extends UIView {
         const marginBottom  = parseFloat(titleLargeStyle.marginBottom);
         // FIXME: We're off by two pixels. This is possibly a line-height
         // anti-aliasing bounding box difference.
-        offsetHeight = baseline + descenderHeight + paddingBottom + marginBottom;
+        offsetHeight =
+            baseline + descenderHeight + paddingBottom + marginBottom;
         offsetHeight = offsetHeight + 2;
       } else {
         offsetHeight = 0;
