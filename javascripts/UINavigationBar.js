@@ -113,11 +113,11 @@ class UINavigationBar extends UIView {
     if (titleLarge) {
       const paddingBottom = parseFloat(titleLargeStyle.paddingBottom);
       const marginBottom  = parseFloat(titleLargeStyle.marginBottom);
-      // FIXME: We're off by two pixels. This is possibly a line-height
+      // FIXME: We're off by one pixel. This is possibly a line-height
       // anti-aliasing bounding box difference.
       offsetHeight =
           baseline + descenderHeight + paddingBottom + marginBottom;
-      offsetHeight = offsetHeight + 2;
+      offsetHeight = offsetHeight + 1;
     } else {
       offsetHeight = 0;
     }
@@ -128,7 +128,7 @@ class UINavigationBar extends UIView {
 
       // const clamp = (n, min, max) => Math.max(min, Math.min(n, max));
       // const percent = clamp((window.scrollY - offsetHeight) / 9, 0, 1);
-      const percent = Math.max(0, Math.min((window.scrollY - offsetHeight), 1));
+      const percent = Math.max(0, Math.min((window.scrollY - offsetHeight) / 9, 1));
 
       const backgroundStyle = getComputedStyle(background);
       const backgroundColor = backgroundStyle
@@ -184,16 +184,16 @@ class UINavigationBar extends UIView {
     min-height: 44px;
     background: rgba(249,249,249,0.94);
     box-shadow: 0 0.33px 0 0 rgba(0,0,0,0.30);
-    backdrop-filter: blur(20px) saturate(100%);
-    -webkit-backdrop-filter: blur(20px) saturate(100%);
+    /* backdrop-filter: blur(20px) saturate(100%); */
+    /* -webkit-backdrop-filter: blur(20px) saturate(100%); */
   }
 
   @media (prefers-color-scheme: dark) {
     #background {
       background: rgba(29,29,29,0.94);
       box-shadow: 0 0.33px 0 0 rgba(255,255,255,0.15);
-      backdrop-filter: blur(20px) saturate(30%);
-      -webkit-backdrop-filter: blur(20px) saturate(30%);
+      /* backdrop-filter: blur(20px) saturate(30%); */
+      /* -webkit-backdrop-filter: blur(20px) saturate(30%); */
     }
   }
 
