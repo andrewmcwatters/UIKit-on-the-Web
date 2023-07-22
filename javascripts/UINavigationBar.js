@@ -1,7 +1,5 @@
 // https://developer.mozilla.org/en-US/docs/Web/API/Web_components/Using_custom_elements
 // https://developer.apple.com/documentation/uikit/uinavigationbar
-const clamp = (n, min, max) => Math.max(min, Math.min(n, max));
-
 // Create a class for the element
 class UINavigationBar extends UIView {
   static get observedAttributes() { return ['title', 'preferslargetitle']; }
@@ -25,6 +23,8 @@ class UINavigationBar extends UIView {
         }),
       );
     } catch (err) {}
+
+    const clamp = (n, min, max) => Math.max(min, Math.min(n, max));
 
     document.addEventListener('scroll', (event) => {
       // https://developer.apple.com/documentation/uikit/uinavigationbar/2908999-preferslargetitles
