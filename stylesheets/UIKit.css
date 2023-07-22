@@ -34,3 +34,12 @@ x-uiview #title-large {
     color: #FFFFFF;
   }
 }
+
+@media (orientation: landscape) {
+  x-uiview #title-large {
+    font-size: 0;
+    line-height: 0;
+    padding-top: calc(env(safe-area-inset-top) + 44px);
+    padding-bottom: 0;
+  }
+}
