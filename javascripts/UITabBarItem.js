@@ -2,11 +2,12 @@
 // https://developer.apple.com/documentation/uikit/uitabbaritem
 // Create a class for the element
 class UITabBarItem extends UIBarItem {
-  static get observedAttributes() { return ['title']; }
+  static get observedAttributes() { return ['title', 'href']; }
 
   draw() {
     const shadow = this.shadowRoot;
     const title  = this.getAttribute('title');
+    const href   = this.getAttribute('href');
 
     shadow.innerHTML = /* html */`<style>
   :host {
@@ -14,7 +15,11 @@ class UITabBarItem extends UIBarItem {
     min-height: 49px;
     user-select: none;
     -webkit-user-select: none;
-    pointer-events: none;
+  }
+
+  a {
+    text-decoration: none;
+    -webkit-touch-callout: none;
   }
 
   #symbol {
@@ -47,12 +52,12 @@ class UITabBarItem extends UIBarItem {
     }
   }
 </style>
-<div id="symbol">
-  <slot></slot>
-</div>
-<div id="title">
-  ${title}
-</div>`;
+<a${title ? ` title="${title}"` : ''}${href ? ` href="${href}"` : ''}>
+  <div id="symbol">
+    <slot></slot>
+  </div>
+  <div id="title">${title}</div>
+</a>`;
   }
 }
 
