@@ -13,9 +13,8 @@ class UITabBarItem extends UIBarItem {
   :host {
     min-width: 48px;
     min-height: 49px;
-    user-select: none;
-    -webkit-user-select: none;
-    }
+    pointer-events: none;
+  }
 
   #symbol {
     margin-top: 7px;

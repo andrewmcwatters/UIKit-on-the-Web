@@ -24,8 +24,7 @@ x-uiview > #title-large {
   padding-top: calc(env(safe-area-inset-top) + 44px + 4px);
   padding-bottom: 7px;
   transition: opacity 0.2s linear;
-  user-select: none;
-  -webkit-user-select: none;
+  pointer-events: none;
 }
 
 @media (prefers-color-scheme: dark) {
