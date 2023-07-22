@@ -51,6 +51,11 @@ class UITabBarItem extends UIBarItem {
       color: #FFFFFF;
     }
   }
+
+  a:any-link * {
+    color: var(--apple-system-blue) !important;
+    color: -apple-system-blue !important;
+  }
 </style>
 <a${title ? ` title="${title}"` : ''}${href ? ` href="${href}"` : ''}>
   <div id="symbol">
