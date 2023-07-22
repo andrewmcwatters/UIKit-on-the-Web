@@ -25,10 +25,12 @@ class UINavigationBar extends UIView {
     } catch (err) {}
 
     // handleScroll
+    this.handleScroll = this.handleScroll.bind(this);
     document.addEventListener('scroll', this.handleScroll, passiveIfSupported);
 
     // handleOrientationChange
     var mql = matchMedia("(orientation:landscape)");
+    this.handleOrientationChange = this.handleOrientationChange.bind(this);
     mql.onchange = this.handleOrientationChange;
   }
 
@@ -46,10 +48,10 @@ class UINavigationBar extends UIView {
   }
 
   handleOrientationChange(event) {
-    // if(event.matches) // landscape
-    //     …
-    // else
-    //     …
+    this.initializeStyles();
+
+    event = new Event('scroll');
+    document.dispatchEvent(event);
   }
 
   handleScroll(event) {
@@ -152,10 +154,12 @@ class UINavigationBar extends UIView {
 
     // https://developer.apple.com/documentation/uikit/uinavigationbar/2908999-preferslargetitles
     // Hide title if the title displays in a large format
-    const mql = matchMedia('(orientation:landscape)');
+    var mql = matchMedia('(orientation:landscape)');
+    const title = this.shadowRoot.querySelector('#title');
     if (!mql.matches) {
-      const title = this.shadowRoot.querySelector('#title');
       title.style.opacity = 0;
+    } else {
+      title.style.opacity = '';
     }
 
     // Set #background rgb background to body rgb background and remove
