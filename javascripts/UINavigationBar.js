@@ -61,12 +61,16 @@ class UINavigationBar extends UIView {
   
         baseline          = paddingTop + lineHeight - descenderHeight;
 
-        if (window.scrollY >= baseline) {
-          titleLarge.style.opacity = 0;
-               title.style.opacity = 1;
-        } else {
-          titleLarge.style.opacity = 1;
-               title.style.opacity = 0;
+        // Computed baseline may be less than 0 if (orientation: landscape)
+        // Do not hide title in (orientation: landscape)
+        if (baseline > 0) {
+          if (window.scrollY >= baseline) {
+            titleLarge.style.opacity = 0;
+                 title.style.opacity = 1;
+          } else {
+            titleLarge.style.opacity = 1;
+                 title.style.opacity = 0;
+          }
         }
       }
 
@@ -134,8 +138,11 @@ class UINavigationBar extends UIView {
 
     // https://developer.apple.com/documentation/uikit/uinavigationbar/2908999-preferslargetitles
     // Hide title if the title displays in a large format
-    const title = this.shadowRoot.querySelector('#title');
-    title.style.opacity = 0;
+    const mql = matchMedia('(orientation:landscape)');
+    if (!mql.matches) {
+      const title = this.shadowRoot.querySelector('#title');
+      title.style.opacity = 0;
+    }
 
     // Set #background rgb background to body rgb background and remove
     // box-shadow
