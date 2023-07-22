@@ -11,7 +11,7 @@ class UITabBarItem extends UIBarItem {
 
   initializeStyles() {
     const href = this.getAttribute('href');
-    const url  = new URL(href, location.href);
+    const url  = new URL(href, document.baseURI);
     if (url.href !== location.href) {
       this.shadowRoot.querySelector('a #symbol').style.color = '#999999';
       this.shadowRoot.querySelector('a #title ').style.color = '#999999';
