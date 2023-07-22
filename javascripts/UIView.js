@@ -20,7 +20,7 @@ class UIView extends HTMLElement {
   draw() {
     const shadow = this.shadowRoot;
 
-    shadow.innerHTML = `<slot></slot>`;
+    shadow.innerHTML = /* html */`<slot></slot>`;
   }
 }
 

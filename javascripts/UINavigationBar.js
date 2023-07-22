@@ -148,8 +148,7 @@ class UINavigationBar extends UIView {
     const shadow = this.shadowRoot;
     const title  = this.getAttribute('title');
 
-    shadow.innerHTML = 
-`<style>
+    shadow.innerHTML = /* html */`<style>
   #background {
     padding-top: env(safe-area-inset-top);
     position: fixed;

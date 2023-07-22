@@ -5,8 +5,7 @@ class UITabBar extends UIView {
   draw() {
     const shadow = this.shadowRoot;
 
-    shadow.innerHTML = 
-`<style>
+    shadow.innerHTML = /* html */`<style>
   #background {
     padding-bottom: env(safe-area-inset-bottom);
     position: fixed;

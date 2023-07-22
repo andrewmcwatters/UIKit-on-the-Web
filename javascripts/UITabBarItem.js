@@ -8,8 +8,7 @@ class UITabBarItem extends UIBarItem {
     const shadow = this.shadowRoot;
     const title  = this.getAttribute('title');
 
-    shadow.innerHTML = 
-`<style>
+    shadow.innerHTML = /* html */`<style>
   :host {
     min-width: 48px;
     min-height: 49px;
