@@ -227,6 +227,7 @@ class UINavigationBar extends UIView {
     text-align: center;
     line-height: 22px;
     transition: opacity 0.2s linear;
+    cursor: default;
   }
 
   @media (prefers-color-scheme: dark) {
