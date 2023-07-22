@@ -30,7 +30,7 @@ x-uiview #title-large {
 }
 
 @media (prefers-color-scheme: dark) {
-  x-uiview > #title-large {
+  x-uiview #title-large {
     color: #FFFFFF;
   }
 }
