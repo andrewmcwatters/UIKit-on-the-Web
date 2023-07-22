@@ -24,97 +24,12 @@ class UINavigationBar extends UIView {
       );
     } catch (err) {}
 
-    const clamp = (n, min, max) => Math.max(min, Math.min(n, max));
+    // handleScroll
+    document.addEventListener('scroll', this.handleScroll, passiveIfSupported);
 
-    document.addEventListener('scroll', (event) => {
-      // Fade out large title and fade in title if we scroll past the large
-      // title's baseline
-      const { target }    = event;
-      const titleLarge    = target.querySelector('x-uiview #title-large');
-      const background    = this.shadowRoot.querySelector('#background');
-
-      let offsetHeight;
-      let titleLargeStyle;
-      let baseline;
-      let descenderHeight;
-
-      if (titleLarge) {
-        const title       = this.shadowRoot.querySelector('#title');
-  
-        // #background offsetHeight
-        ({ offsetHeight } = background);
-  
-        // #title-large padding-top
-        titleLargeStyle   = getComputedStyle(titleLarge);
-        let paddingTop    = parseFloat(titleLargeStyle.paddingTop);
-  
-        // #background box-shadow offset-y
-        const offsetY     = parseFloat('1px');
-  
-        // #title-large padding-top distance from the bottom of #background,
-        // including box-shadow offset-y
-        paddingTop        = paddingTop - (offsetHeight + offsetY);
-  
-        // #title-large typographic metrics from system-ui
-        const lineHeight  = parseFloat(titleLargeStyle.lineHeight);
-        descenderHeight   = parseFloat('7px');
-  
-        baseline          = paddingTop + lineHeight - descenderHeight;
-
-        // Computed baseline may be less than 0 if (orientation: landscape)
-        // Do not hide title in (orientation: landscape)
-        if (baseline > 0) {
-          if (window.scrollY >= baseline) {
-            titleLarge.style.opacity = 0;
-                 title.style.opacity = 1;
-          } else {
-            titleLarge.style.opacity = 1;
-                 title.style.opacity = 0;
-          }
-        }
-      }
-
-      // Fade in background and box-shadow if we scroll past the large title's
-      // offsetHeight
-      //
-      // NOTE: Unlike #title and #title-large, these properties fade in as you
-      // scroll versus using a CSS transition. These properties become visible
-      // 1px past the offsetHeight, and complete transition 9px past the
-      // offsetHeight. This behavior has been verified in Mail, Podcasts, and
-      // the App Store.
-      if (titleLarge) {
-        const paddingBottom = parseFloat(titleLargeStyle.paddingBottom);
-        const marginBottom  = parseFloat(titleLargeStyle.marginBottom);
-        // FIXME: We're off by two pixels. This is possibly a line-height
-        // anti-aliasing bounding box difference.
-        offsetHeight =
-            baseline + descenderHeight + paddingBottom + marginBottom;
-        offsetHeight = offsetHeight + 2;
-      } else {
-        offsetHeight = 0;
-      }
-
-      if (window.scrollY > offsetHeight) {
-        background.style.background = '';
-        background.style.boxShadow  = '';
-
-        let percent = clamp((window.scrollY - offsetHeight) / 9, 0, 1);
-
-        const backgroundStyle = getComputedStyle(background);
-        const backgroundColor = backgroundStyle
-          .backgroundColor
-          .replace('0.94', `calc(0.94 * ${percent})`);
-        background.style.background = backgroundColor;
-
-        const boxShadow = backgroundStyle
-          .boxShadow
-          .replace('0.3', `calc(0.3 * ${percent})`);
-        background.style.boxShadow  = boxShadow;
-      } else {
-        background.style.background = this.calculateBackgroundColor();
-        background.style.boxShadow  = 'none';
-      }
-    }, passiveIfSupported);
+    // handleOrientationChange
+    var mql = matchMedia("(orientation:landscape)");
+    mql.onchange = this.handleOrientationChange;
   }
 
   calculateBackgroundColor() {
@@ -128,6 +43,105 @@ class UINavigationBar extends UIView {
   connectedCallback() {
     this.draw();
     this.initializeStyles();
+  }
+
+  handleOrientationChange(event) {
+    // if(event.matches) // landscape
+    //     …
+    // else
+    //     …
+  }
+
+  handleScroll(event) {
+    // Fade out large title and fade in title if we scroll past the large
+    // title's baseline
+    const { target }    = event;
+    const titleLarge    = target.querySelector('x-uiview #title-large');
+    const background    = this.shadowRoot.querySelector('#background');
+
+    let offsetHeight;
+    let titleLargeStyle;
+    let baseline;
+    let descenderHeight;
+
+    if (titleLarge) {
+      const title       = this.shadowRoot.querySelector('#title');
+
+      // #background offsetHeight
+      ({ offsetHeight } = background);
+
+      // #title-large padding-top
+      titleLargeStyle   = getComputedStyle(titleLarge);
+      let paddingTop    = parseFloat(titleLargeStyle.paddingTop);
+
+      // #background box-shadow offset-y
+      const offsetY     = parseFloat('1px');
+
+      // #title-large padding-top distance from the bottom of #background,
+      // including box-shadow offset-y
+      paddingTop        = paddingTop - (offsetHeight + offsetY);
+
+      // #title-large typographic metrics from system-ui
+      const lineHeight  = parseFloat(titleLargeStyle.lineHeight);
+      descenderHeight   = parseFloat('7px');
+
+      baseline          = paddingTop + lineHeight - descenderHeight;
+
+      // Computed baseline may be less than 0 if (orientation: landscape)
+      // Do not hide title in (orientation: landscape)
+      if (baseline > 0) {
+        if (window.scrollY >= baseline) {
+          titleLarge.style.opacity = 0;
+                title.style.opacity = 1;
+        } else {
+          titleLarge.style.opacity = 1;
+                title.style.opacity = 0;
+        }
+      }
+    }
+
+    // Fade in background and box-shadow if we scroll past the large title's
+    // offsetHeight
+    //
+    // NOTE: Unlike #title and #title-large, these properties fade in as you
+    // scroll versus using a CSS transition. These properties become visible
+    // 1px past the offsetHeight, and complete transition 9px past the
+    // offsetHeight. This behavior has been verified in Mail, Podcasts, and
+    // the App Store.
+    if (titleLarge) {
+      const paddingBottom = parseFloat(titleLargeStyle.paddingBottom);
+      const marginBottom  = parseFloat(titleLargeStyle.marginBottom);
+      // FIXME: We're off by two pixels. This is possibly a line-height
+      // anti-aliasing bounding box difference.
+      offsetHeight =
+          baseline + descenderHeight + paddingBottom + marginBottom;
+      offsetHeight = offsetHeight + 2;
+    } else {
+      offsetHeight = 0;
+    }
+
+    if (window.scrollY > offsetHeight) {
+      background.style.background = '';
+      background.style.boxShadow  = '';
+
+      // const clamp = (n, min, max) => Math.max(min, Math.min(n, max));
+      // const percent = clamp((window.scrollY - offsetHeight) / 9, 0, 1);
+      const percent = Math.max(0, Math.min((window.scrollY - offsetHeight), 1));
+
+      const backgroundStyle = getComputedStyle(background);
+      const backgroundColor = backgroundStyle
+        .backgroundColor
+        .replace('0.94', `calc(0.94 * ${percent})`);
+      background.style.background = backgroundColor;
+
+      const boxShadow = backgroundStyle
+        .boxShadow
+        .replace('0.3', `calc(0.3 * ${percent})`);
+      background.style.boxShadow  = boxShadow;
+    } else {
+      background.style.background = this.calculateBackgroundColor();
+      background.style.boxShadow  = 'none';
+    }
   }
 
   initializeStyles() {
