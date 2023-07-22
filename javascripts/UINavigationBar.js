@@ -126,7 +126,7 @@ class UINavigationBar extends UIView {
       background.style.background = '';
       background.style.boxShadow  = '';
 
-      // const clamp = (n, min, max) => Math.max(min, Math.min(n, max));
+      // const clamp   = (n, min, max) => Math.max(min, Math.min(n, max));
       // const percent = clamp((window.scrollY - offsetHeight) / 9, 0, 1);
       const percent = Math.max(0, Math.min((window.scrollY - offsetHeight) / 9, 1));
 
