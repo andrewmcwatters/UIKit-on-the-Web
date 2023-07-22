@@ -4,6 +4,20 @@
 class UITabBarItem extends UIBarItem {
   static get observedAttributes() { return ['title', 'href']; }
 
+  connectedCallback() {
+    this.draw();
+    this.initializeStyles();
+  }
+
+  initializeStyles() {
+    const href = this.getAttribute('href');
+    const url  = new URL(href, location.href);
+    if (url.href !== location.href) {
+      this.shadowRoot.querySelector('a #symbol').style.color = '#999999';
+      this.shadowRoot.querySelector('a #title ').style.color = '#999999';
+    }
+  }
+
   draw() {
     const shadow = this.shadowRoot;
     const title  = this.getAttribute('title');
@@ -52,9 +66,9 @@ class UITabBarItem extends UIBarItem {
     }
   }
 
-  a:any-link * {
-    color: var(--apple-system-blue) !important;
-    color: -apple-system-blue !important;
+  a:any-link #symbol, a:any-link #title {
+    color: var(--apple-system-blue);
+    color: -apple-system-blue;
   }
 </style>
 <a${title ? ` title="${title}"` : ''}${href ? ` href="${href}"` : ''}>
