@@ -9,7 +9,7 @@
   min-height: 100vh;
 }
 
-x-uiview > #title-large {
+x-uiview #title-large {
   /* font-family: SFPro-Bold; */
   font-weight: 700;
   font-size: 34px;

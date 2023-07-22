@@ -30,7 +30,7 @@ class UINavigationBar extends UIView {
       // Fade out large title and fade in title if we scroll past the large
       // title's baseline
       const { target }    = event;
-      const titleLarge    = target.querySelector('x-uiview > #title-large');
+      const titleLarge    = target.querySelector('x-uiview #title-large');
       const background    = this.shadowRoot.querySelector('#background');
 
       let offsetHeight;
