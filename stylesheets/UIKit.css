@@ -27,7 +27,7 @@ h1, h2, h3, h4, h5, h6 {
   min-height: 100vh;
 }
 
-x-uiview #title-large {
+apple-uiview #title-large {
   /* font-family: SFPro-Bold; */
   font-weight: 700;
   font-size: 34px;
@@ -45,13 +45,13 @@ x-uiview #title-large {
 }
 
 @media (prefers-color-scheme: dark) {
-  x-uiview #title-large {
+  apple-uiview #title-large {
     color: #FFFFFF;
   }
 }
 
 @media (orientation: landscape) {
-  x-uiview #title-large {
+  apple-uiview #title-large {
     font-size: 0;
     line-height: 0;
     padding-top: calc(env(safe-area-inset-top) + 44px);

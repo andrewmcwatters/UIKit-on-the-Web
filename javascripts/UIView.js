@@ -25,4 +25,4 @@ class UIView extends HTMLElement {
 }
 
 // Define the new element
-customElements.define('x-uiview', UIView);
+customElements.define('apple-uiview', UIView);

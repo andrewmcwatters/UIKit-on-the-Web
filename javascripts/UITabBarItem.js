@@ -81,4 +81,4 @@ class UITabBarItem extends UIBarItem {
 }
 
 // Define the new element
-customElements.define('x-uitabbaritem', UITabBarItem);
+customElements.define('apple-uitabbaritem', UITabBarItem);

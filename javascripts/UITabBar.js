@@ -43,4 +43,4 @@ class UITabBar extends UIView {
 }
 
 // Define the new element
-customElements.define('x-uitabbar', UITabBar);
+customElements.define('apple-uitabbar', UITabBar);
