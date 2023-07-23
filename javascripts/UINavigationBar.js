@@ -28,6 +28,10 @@ class UINavigationBar extends UIView {
     this.handleScroll = this.handleScroll.bind(this);
     document.addEventListener('scroll', this.handleScroll, passiveIfSupported);
 
+    // handleTouchEnd
+    this.handleTouchEnd = this.handleTouchEnd.bind(this);
+    document.addEventListener('touchend', this.handleTouchEnd);
+
     // handleOrientationChange
     var mql = matchMedia("(orientation:landscape)");
     this.handleOrientationChange = this.handleOrientationChange.bind(this);
@@ -72,12 +76,12 @@ class UINavigationBar extends UIView {
       // #background offsetHeight
       ({ offsetHeight } = background);
 
+      // #background box-shadow offset-y
+      const offsetY     = parseFloat('1px');
+
       // #title-large padding-top
       titleLargeStyle   = getComputedStyle(titleLarge);
       let paddingTop    = parseFloat(titleLargeStyle.paddingTop);
-
-      // #background box-shadow offset-y
-      const offsetY     = parseFloat('1px');
 
       // #title-large padding-top distance from the bottom of #background,
       // including box-shadow offset-y
@@ -92,12 +96,12 @@ class UINavigationBar extends UIView {
       // Computed baseline may be less than 0 if (orientation: landscape)
       // Do not hide title in (orientation: landscape)
       if (baseline > 0) {
-        if (window.scrollY >= baseline) {
+        if (scrollY >= baseline) {
           titleLarge.style.opacity = 0;
-                title.style.opacity = 1;
+               title.style.opacity = 1;
         } else {
           titleLarge.style.opacity = 1;
-                title.style.opacity = 0;
+               title.style.opacity = 0;
         }
       }
     }
@@ -122,13 +126,13 @@ class UINavigationBar extends UIView {
       offsetHeight = 0;
     }
 
-    if (window.scrollY > offsetHeight) {
+    if (scrollY > offsetHeight) {
       background.style.background = '';
       background.style.boxShadow  = '';
 
       // const clamp   = (n, min, max) => Math.max(min, Math.min(n, max));
-      // const percent = clamp((window.scrollY - offsetHeight) / 9, 0, 1);
-      const percent = Math.max(0, Math.min((window.scrollY - offsetHeight) / 9, 1));
+      // const percent = clamp((scrollY - offsetHeight) / 9, 0, 1);
+      const percent = Math.max(0, Math.min((scrollY - offsetHeight) / 9, 1));
 
       const backgroundStyle = getComputedStyle(background);
       const backgroundColor = backgroundStyle
@@ -144,6 +148,55 @@ class UINavigationBar extends UIView {
       background.style.background = this.calculateBackgroundColor();
       background.style.boxShadow  = 'none';
     }
+  }
+
+  handleTouchEnd(event) {
+    // Scroll up or down to keep #title-large or #title in view
+    if (scrollY < 0) {
+      return;
+    }
+
+    const { target } = event;
+    const titleLarge = target.querySelector('apple-uiview #title-large');
+    const background = this.shadowRoot.querySelector('#background');
+
+    if (titleLarge === undefined) {
+      return;
+    }
+
+    // #background offsetHeight
+    const { offsetHeight } = background;
+
+    // #background box-shadow offset-y
+    const offsetY          = parseFloat('1px');
+
+    // #title-large padding-top
+    const titleLargeStyle  = getComputedStyle(titleLarge);
+    let paddingTop         = parseFloat(titleLargeStyle.paddingTop);
+
+    // #title-large padding-top distance from the bottom of #background,
+    // including box-shadow offset-y
+    paddingTop             = paddingTop - (offsetHeight + offsetY);
+
+    // #title-large typographic metrics from system-ui
+    const lineHeight       = parseFloat(titleLargeStyle.lineHeight);
+
+    // #title-large padding-bottom
+    const paddingBottom    = parseFloat(titleLargeStyle.paddingBottom);
+
+    // #title-large bottom
+    const bottom           = paddingTop + lineHeight + paddingBottom;
+
+    if (scrollY < paddingTop + lineHeight / 2) {
+      scroll({ top: 0 });
+    } else if (scrollY < bottom) {
+      scroll({ top: bottom })
+    }
+
+    // NOTE: There is no `momentumscrollend` event. This means that users can
+    // "curl" the window such that the #title-large element is occuluded by the
+    // #background. This is a known issue that cannot be fixed without a
+    // setTimeout hack.
   }
 
   initializeStyles() {
