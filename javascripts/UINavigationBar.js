@@ -34,8 +34,12 @@ class UINavigationBar extends UIView {
 
     // handleOrientationChange
     var mql = matchMedia("(orientation:landscape)");
-    this.handleOrientationChange = this.handleOrientationChange.bind(this);
-    mql.onchange = this.handleOrientationChange;
+    this.handleMediaChange = this.handleMediaChange.bind(this);
+    mql.onchange = this.handleMediaChange;
+    
+    // handleColorSchemeChange
+    mql = matchMedia("(prefers-color-scheme:light)");
+    mql.onchange = this.handleMediaChange;
   }
 
   calculateBackgroundColor() {
@@ -51,7 +55,7 @@ class UINavigationBar extends UIView {
     this.initializeStyles();
   }
 
-  handleOrientationChange(event) {
+  handleMediaChange(event) {
     this.initializeStyles();
 
     event = new Event('scroll');
