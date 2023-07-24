@@ -95,6 +95,7 @@ class UINavigationBar extends UIView {
       const lineHeight  = parseFloat(titleLargeStyle.lineHeight);
       descenderHeight   = parseFloat('7px');
 
+      // #title-large baseline
       baseline          = paddingTop + lineHeight - descenderHeight;
 
       // Computed baseline may be less than 0 if (orientation: landscape)
