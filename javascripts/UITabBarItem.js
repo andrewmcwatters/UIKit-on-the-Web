@@ -15,6 +15,8 @@ class UITabBarItem extends UIBarItem {
     if (url.href !== location.href) {
       this.shadowRoot.querySelector('a #symbol').style.color = '#999999';
       this.shadowRoot.querySelector('a #title ').style.color = '#999999';
+    } else {
+      this.shadowRoot.querySelector('a').style.pointerEvents = 'none';
     }
   }
 
@@ -32,12 +34,13 @@ class UITabBarItem extends UIBarItem {
   }
 
   a {
+    display: block;
     text-decoration: none;
     -webkit-touch-callout: none;
   }
 
   #symbol {
-    margin-top: 7px;
+    padding-top: 7px;
     /* font-family: SFPro-Medium; */
     font-weight: 500;
     font-size: 18px;
@@ -52,7 +55,7 @@ class UITabBarItem extends UIBarItem {
   }
 
   #title {
-    margin-bottom: 2px;
+    padding-bottom: 2px;
     /* font-family: SFPro-Medium; */
     font-weight: 500;
     font-size: 10px;
