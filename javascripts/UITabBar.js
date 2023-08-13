@@ -2,6 +2,18 @@
 // https://developer.apple.com/documentation/uikit/uitabbar
 // Create a class for the element
 class UITabBar extends UIView {
+  connectedCallback() {
+    this.draw();
+    this.initializeStyles();
+  }
+
+  initializeStyles() {
+    // Set #background rgb background to transparent and remove box-shadow
+    const background            = this.shadowRoot.querySelector('#background');
+    background.style.background = 'transparent';
+    background.style.boxShadow  = 'none';
+  }
+
   draw() {
     const shadow = this.shadowRoot;
 
