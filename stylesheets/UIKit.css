@@ -41,6 +41,7 @@ apple-uiview #title-large {
   /* padding-top: 4px; */
   padding-top: calc(env(safe-area-inset-top) + 44px + 4px);
   padding-bottom: 7px;
+  transform-origin: bottom left;
   transition: opacity 0.2s linear;
 }
 

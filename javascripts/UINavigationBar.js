@@ -153,6 +153,16 @@ class UINavigationBar extends UIView {
       background.style.background = this.calculateBackgroundColor();
       background.style.boxShadow  = 'none';
     }
+
+    // Scale large title up to 110% from the top left over 3 inches (at 72 dpi)
+    // if the users pulls the view down
+    if (titleLarge && scrollY < 0) {
+      // const clamp   = (n, min, max) => Math.max(min, Math.min(n, max));
+      // const percent = clamp((scrollY - offsetHeight) / 9, 0, 1);
+      const percent = Math.max(0, Math.min(scrollY / -216, 1));
+
+      titleLarge.style.transform = `translate3d(0,0,0) scale(calc(1 + 0.1 * ${percent})`;
+    }
   }
 
   handleTouchEnd(event) {
