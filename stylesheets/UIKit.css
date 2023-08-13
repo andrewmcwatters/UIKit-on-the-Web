@@ -27,6 +27,10 @@ h1, h2, h3, h4, h5, h6 {
   min-height: 100vh;
 }
 
+apple-uiview {
+  display: block;
+}
+
 apple-uiview #title-large {
   /* font-family: SFPro-Bold; */
   font-weight: 700;
