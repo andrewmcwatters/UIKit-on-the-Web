@@ -13,8 +13,8 @@ class UITabBar extends UIView {
     const background = this.shadowRoot.querySelector('#background');
     background.style.background           = 'transparent';
     background.style.boxShadow            = 'none';
-    background.style.backdropFilter       = '';
-    background.style.webkitBackdropFilter = '';
+    background.style.backdropFilter       = 'none';
+    background.style.webkitBackdropFilter = 'none';
   }
 
   draw() {
