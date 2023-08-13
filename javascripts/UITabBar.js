@@ -8,10 +8,13 @@ class UITabBar extends UIView {
   }
 
   initializeStyles() {
-    // Set #background rgb background to transparent and remove box-shadow
-    const background            = this.shadowRoot.querySelector('#background');
-    background.style.background = 'transparent';
-    background.style.boxShadow  = 'none';
+    // Set #background rgb background to transparent and remove box-shadow and
+    // backdrop filter
+    const background = this.shadowRoot.querySelector('#background');
+    background.style.background           = 'transparent';
+    background.style.boxShadow            = 'none';
+    background.style.backdropFilter       = '';
+    background.style.webkitBackdropFilter = '';
   }
 
   draw() {
