@@ -159,7 +159,7 @@ class UINavigationBar extends UIView {
     if (titleLarge && scrollY < 0) {
       // const clamp   = (n, min, max) => Math.max(min, Math.min(n, max));
       // const percent = clamp((scrollY - offsetHeight) / 9, 0, 1);
-      const percent = Math.max(0, Math.min(scrollY / -216, 1));
+      const percent = Math.max(0, Math.min(scrollY / (-216 / 2), 1));
 
       titleLarge.style.transform = `translate3d(0,0,0) scale(calc(1 + 0.1 * ${percent})`;
     }
