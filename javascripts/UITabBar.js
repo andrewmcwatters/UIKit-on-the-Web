@@ -62,8 +62,7 @@ class UITabBar extends UIView {
       let boxShadow = backgroundStyle
         .boxShadow
         .replace('0.3',  `calc(0.3  * ${percent})`);
-      boxShadow = backgroundStyle
-        .boxShadow
+      boxShadow = boxShadow
         .replace('0.16', `calc(0.16 * ${percent})`);
       background.style.boxShadow  = boxShadow;
     } else {
@@ -77,11 +76,15 @@ class UITabBar extends UIView {
   initializeStyles() {
     // Set #background rgb background to transparent and remove box-shadow and
     // backdrop filter
+    const view       = document.querySelector('apple-uiview');
     const background = this.shadowRoot.querySelector('#background');
-    background.style.background           = 'transparent';
-    background.style.boxShadow            = 'none';
-    background.style.backdropFilter       = 'none';
-    background.style.webkitBackdropFilter = 'none';
+
+    if (view.offsetHeight <= innerHeight - background.offsetHeight) {
+      background.style.background           = 'transparent';
+      background.style.boxShadow            = 'none';
+      background.style.backdropFilter       = 'none';
+      background.style.webkitBackdropFilter = 'none';
+    }
 
     requestAnimationFrame(() => {
       const view = document.querySelector('apple-uiview');
